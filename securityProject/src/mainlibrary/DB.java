@@ -14,7 +14,7 @@ import java.util.Properties;
  *
  * @author bikash
  */
-public class DB {
+final public class DB {
 
     public static String user = "root";
     public static String connection = "jdbc:mysql://localhost:3306/library";

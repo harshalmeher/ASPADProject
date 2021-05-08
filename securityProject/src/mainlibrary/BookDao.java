@@ -4,12 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class BookDao {
+final public class BookDao {
 public static int save(String callno,String name,String author,String publisher,int quantity){
 	int status=0;
-	try{
+	try(PreparedStatement ps=con.prepareStatement("insert into books(callno,name,author,publisher,quantity) values(?,?,?,?,?)")){
 		Connection con=DB.getConnection();
-		PreparedStatement ps=con.prepareStatement("insert into books(callno,name,author,publisher,quantity) values(?,?,?,?,?)");
+		
 		ps.setString(1,callno);
 		ps.setString(2,name);
 		ps.setString(3,author);
@@ -29,8 +29,8 @@ public static int save(String callno,String name,String author,String publisher,
     public static boolean PublisherValidate( String Publisher)
 {
     boolean status = false;
-    try(Connection con = DB.getConnection()) {
-        PreparedStatement ps = con.prepareStatement("select * from Publisher where PublisherName = ?"); 
+    try(Connection con = DB.getConnection();PreparedStatement ps = con.prepareStatement("select * from Publisher where PublisherName = ?");) {
+        
         ps.setString(1, Publisher);
         ResultSet rs=ps.executeQuery();
         status=rs.next();
@@ -42,8 +42,8 @@ public static int save(String callno,String name,String author,String publisher,
     public static int AddPublisher( String Publisher)
     {
         int status= 0;
-        try(Connection con = DB.getConnection()) {
-		PreparedStatement ps=con.prepareStatement("insert into Publisher(PublisherName) values(?)");
+        try(Connection con = DB.getConnection();PreparedStatement ps=con.prepareStatement("insert into Publisher(PublisherName) values(?)");) {
+		
 		ps.setString(1,Publisher);
 		status=ps.executeUpdate();
                 con.close();
@@ -55,8 +55,9 @@ public static int save(String callno,String name,String author,String publisher,
   
     public static int SaveBook(String BookN, String AuthorN, String PublisherN, String ShelfN, String RowN, String GenreN) {
             int status= 0;
-        try(Connection con = DB.getConnection()) {
-		PreparedStatement ps=con.prepareStatement("insert into Books(BookName,Author,Genre,Publisher,Shelf, Row) values(?,?,?,?,?,?)");
+        try(Connection con = DB.getConnection();
+			PreparedStatement ps=con.prepareStatement("insert into Books(BookName,Author,Genre,Publisher,Shelf, Row) values(?,?,?,?,?,?)");) {
+		
 		ps.setString(1,BookN);
                 ps.setString(2, AuthorN);
                 ps.setString(3, GenreN);
@@ -71,8 +72,9 @@ public static int save(String callno,String name,String author,String publisher,
     public static int Delete(int BookID)
     {
           int status= 0;
-        try(Connection con = DB.getConnection()) {
-		PreparedStatement ps=con.prepareStatement("DELETE FROM Books where BookID=?");
+        try(Connection con = DB.getConnection();
+		PreparedStatement ps=con.prepareStatement("DELETE FROM Books where BookID=?");) {
+		
 		ps.setInt(1,BookID);
 		status=ps.executeUpdate();
                 con.close();

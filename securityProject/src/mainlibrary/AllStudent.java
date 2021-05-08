@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.WindowConstants;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -20,7 +21,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author bikash
  */
-public class AllStudent extends javax.swing.JFrame {
+final public class AllStudent extends javax.swing.JFrame {
 
     /**
      * Creates new form ViewBook
@@ -28,14 +29,15 @@ public class AllStudent extends javax.swing.JFrame {
      * @throws java.sql.SQLException
      */
     public AllStudent() throws SQLException {
-        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
         initComponents();
         DefaultTableModel model;
         model = (DefaultTableModel) jTable1.getModel();
         // String Data[][]=null;
         //  String Column[]=null;
-        try (Connection Con = DB.getConnection()) {
-            PreparedStatement ps = Con.prepareStatement("select * from Users", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        try (Connection Con = DB.getConnection();
+		PreparedStatement ps = Con.prepareStatement("select * from Users", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);) {
+     
             ResultSet rs = ps.executeQuery();
 
             ResultSetMetaData rsmd = rs.getMetaData();
@@ -248,8 +250,9 @@ public class AllStudent extends javax.swing.JFrame {
             // String Data[][]=null;
             //  String Column[]=null;
             String Search = "%" + SearchField.getText() + "%";
-            try (Connection Con = DB.getConnection()) {
-                PreparedStatement ps = Con.prepareStatement("select * from Users where UserName like ?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            try (Connection Con = DB.getConnection();
+			PreparedStatement ps = Con.prepareStatement("select * from Users where UserName like ?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);) {
+                
                 ps.setString(1, Search);
                 ResultSet rs = ps.executeQuery();
 
@@ -289,8 +292,9 @@ public class AllStudent extends javax.swing.JFrame {
         } else if (AuthorRadio.isSelected()) {
 
             String Search = "%" + SearchField.getText() + "%";
-            try (Connection Con = DB.getConnection()) {
-                PreparedStatement ps = Con.prepareStatement("select * from Users where Email like ?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            try (Connection Con = DB.getConnection();
+			 PreparedStatement ps = Con.prepareStatement("select * from Users where Email like ?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);) {
+               
                 ps.setString(1, Search);
                 ResultSet rs = ps.executeQuery();
 
@@ -350,8 +354,8 @@ public class AllStudent extends javax.swing.JFrame {
             model.removeRow(model.getRowCount() - 1);
         }
 
-        try (Connection Con = DB.getConnection()) {
-            PreparedStatement ps = Con.prepareStatement("select * from Users", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        try (Connection Con = DB.getConnection();PreparedStatement ps = Con.prepareStatement("select * from Users", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);) {
+            
             ResultSet rs = ps.executeQuery();
 
             ResultSetMetaData rsmd = rs.getMetaData();

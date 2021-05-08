@@ -9,7 +9,7 @@ package mainlibrary;
  *
  * @author bikash
  */
-public class About extends javax.swing.JFrame {
+final public class About extends javax.swing.JFrame {
 
     /**
      * Creates new form About
@@ -41,13 +41,10 @@ public class About extends javax.swing.JFrame {
         jTextArea1.setText("Developed by:\n             Bikash Kumar Tudu\t\t\tKalkute Piyush Premchand\n             CSE150001006\t\t\tCSE150001013\n");
         jScrollPane1.setViewportView(jTextArea1);
 
-        jButton1.setText("Back");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
+		jButton1.setText("Back");
+		
+		jButton1.addActionListener(evt -> new jButton1ActionPerformed(evt));
+		
         jTextArea3.setEditable(false);
         jTextArea3.setBackground(new java.awt.Color(210, 106, 231));
         jTextArea3.setColumns(20);
@@ -86,7 +83,7 @@ public class About extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButton1ActionPerformed() {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed

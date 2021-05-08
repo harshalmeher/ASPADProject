@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
  *
  * @author bikash
  */
-public class DeleteBook extends javax.swing.JFrame {
+final public class DeleteBook extends javax.swing.JFrame {
 
     /**
      * Creates new form IssueBookForm

@@ -14,7 +14,7 @@ import static mainlibrary.LibrarianSuccess.ThisLogined;
  *
  * @author bikash
  */
-public class BookForm extends javax.swing.JFrame {
+final public class BookForm extends javax.swing.JFrame {
 
     /**
      * Creates new form BookForm

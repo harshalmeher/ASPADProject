@@ -18,10 +18,10 @@ public class UsersDao {
 
     public static boolean validate(String name, String password) {
         boolean status = false;
-        try {
-            Connection con = DB.getConnection();
+        try (Connection con = DB.getConnection();Statement selectStatement = con.createStatement();){
+            
             String select = "select * from Users where UserName= '" + name + "' and UserPass='"+ password +"'";
-            Statement selectStatement = con.createStatement();
+            
             ResultSet rs = selectStatement.executeQuery(select);
             status = rs.next();
             con.close();
@@ -33,10 +33,11 @@ public class UsersDao {
 
     public static boolean CheckIfAlready(String UserName) {
         boolean status = false;
-        try {
-            Connection con = DB.getConnection();
+        try (Connection con = DB.getConnection();
+		Statement selectStatement = con.createStatement();){
+            
             String select = "select * from Users where UserName= '" + UserName +"'";
-            Statement selectStatement = con.createStatement();
+            
             ResultSet rs = selectStatement.executeQuery(select);
             status = rs.next();
             con.close();
@@ -51,10 +52,10 @@ public class UsersDao {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 
         int status = 0;
-        try {
+        try (Connection con = DB.getConnection();
+            PreparedStatement ps = con.prepareStatement("insert into Users(UserPass,RegDate,UserName,Email) values(?,?,?,?)");){
 
-            Connection con = DB.getConnection();
-            PreparedStatement ps = con.prepareStatement("insert into Users(UserPass,RegDate,UserName,Email) values(?,?,?,?)");
+            
             ps.setString(1, UserPass);
             ps.setString(2, Date);
             ps.setString(3, User);

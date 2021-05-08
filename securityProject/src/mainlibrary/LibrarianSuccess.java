@@ -376,11 +376,10 @@ public class LibrarianSuccess extends javax.swing.JFrame {
         });
         String User = args[0];
         String Pass = args[1];
-        try {
-            Connection Con;
-            Con = DB.getConnection();
-            PreparedStatement ps;
-            ps = Con.prepareStatement("select * from Librarian where UserName=? and Password=?");
+        try ( Connection Con = DB.getConnection();
+            PreparedStatement ps = Con.prepareStatement("select * from Librarian where UserName=? and Password=?");
+         ){
+           
             ps.setString(1, User);
             ps.setString(2, Pass);
             ResultSet rs;
